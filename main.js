@@ -76,15 +76,15 @@ var ExplorerTabsPlugin = class extends import_obsidian.Plugin {
       window.clearTimeout(this.filterRefreshTimer);
       this.filterRefreshTimer = null;
     }
-    document.querySelectorAll(".octarine-tabs-container").forEach((el) => el.remove());
-    document.querySelectorAll(".octarine-filtered-out").forEach((el) => {
-      el.classList.remove("octarine-filtered-out");
+    document.querySelectorAll(".ect-tabs-container").forEach((el) => el.remove());
+    document.querySelectorAll(".ect-filtered-out").forEach((el) => {
+      el.classList.remove("ect-filtered-out");
     });
-    document.querySelectorAll(".octarine-hidden-root").forEach((el) => {
-      el.classList.remove("octarine-hidden-root");
+    document.querySelectorAll(".ect-hidden-root").forEach((el) => {
+      el.classList.remove("ect-hidden-root");
     });
-    document.querySelectorAll(".octarine-files-only-folder").forEach((el) => {
-      el.classList.remove("octarine-files-only-folder");
+    document.querySelectorAll(".ect-files-only-folder").forEach((el) => {
+      el.classList.remove("ect-files-only-folder");
     });
   }
   disconnectObservers() {
@@ -112,19 +112,19 @@ var ExplorerTabsPlugin = class extends import_obsidian.Plugin {
     const container = leaf.view.containerEl;
     if (!container)
       return;
-    const existingBar = container.querySelector(".octarine-tabs-container");
+    const existingBar = container.querySelector(".ect-tabs-container");
     if (existingBar)
       existingBar.remove();
     const navHeader = container.querySelector(".nav-header");
     const filesContainer = container.querySelector(".nav-files-container");
     const tabBar = document.createElement("div");
-    tabBar.className = "octarine-tabs-container";
-    tabBar.classList.toggle("octarine-auto-hide", this.settings.hideWithAutoHide);
+    tabBar.className = "ect-tabs-container";
+    tabBar.classList.toggle("ect-auto-hide", this.settings.hideWithAutoHide);
     const tabButtons = document.createElement("div");
-    tabButtons.className = "octarine-tab-buttons";
+    tabButtons.className = "ect-tab-buttons";
     for (const tab of this.settings.tabs) {
       const btn = document.createElement("button");
-      btn.className = "octarine-tab-btn clickable-icon";
+      btn.className = "ect-tab-btn clickable-icon";
       if (this.settings.activeTabId === tab.id) {
         btn.classList.add("is-active");
       }
@@ -145,9 +145,9 @@ var ExplorerTabsPlugin = class extends import_obsidian.Plugin {
     }
     tabBar.appendChild(tabButtons);
     const actions = document.createElement("div");
-    actions.className = "octarine-tab-actions";
+    actions.className = "ect-tab-actions";
     const resetButton = document.createElement("button");
-    resetButton.className = "octarine-reset-expansion-btn clickable-icon";
+    resetButton.className = "ect-reset-expansion-btn clickable-icon";
     resetButton.setAttribute("aria-label", "Reset folder expansion to settings");
     resetButton.setAttribute("data-tooltip-position", "bottom");
     resetButton.title = "Reset folder expansion to settings";
@@ -250,7 +250,7 @@ var ExplorerTabsPlugin = class extends import_obsidian.Plugin {
   updateTabButtonsState() {
     const leaves = this.app.workspace.getLeavesOfType("file-explorer");
     for (const leaf of leaves) {
-      const buttons = leaf.view.containerEl.querySelectorAll(".octarine-tab-btn");
+      const buttons = leaf.view.containerEl.querySelectorAll(".ect-tab-btn");
       buttons.forEach((btn, index) => {
         const tab = this.settings.tabs[index];
         if (tab && this.settings.activeTabId === tab.id) {
@@ -348,9 +348,9 @@ var ExplorerTabsPlugin = class extends import_obsidian.Plugin {
       return;
     }
     itemStates.forEach(({ wrapperEl, hideRoot, hideFolderTitle, isVisible }) => {
-      wrapperEl.classList.toggle("octarine-hidden-root", hideRoot);
-      wrapperEl.classList.toggle("octarine-files-only-folder", hideFolderTitle);
-      wrapperEl.classList.toggle("octarine-filtered-out", !isVisible);
+      wrapperEl.classList.toggle("ect-hidden-root", hideRoot);
+      wrapperEl.classList.toggle("ect-files-only-folder", hideFolderTitle);
+      wrapperEl.classList.toggle("ect-filtered-out", !isVisible);
     });
   }
   shouldExpandFolder(normalizedPath, isFolder, activeTab, targetPaths, hiddenRootPaths) {
@@ -361,9 +361,9 @@ var ExplorerTabsPlugin = class extends import_obsidian.Plugin {
   clearFilterClasses(filesContainer) {
     filesContainer.querySelectorAll(".nav-folder, .nav-file").forEach((wrapperEl) => {
       wrapperEl.classList.remove(
-        "octarine-filtered-out",
-        "octarine-hidden-root",
-        "octarine-files-only-folder"
+        "ect-filtered-out",
+        "ect-hidden-root",
+        "ect-files-only-folder"
       );
     });
   }
@@ -483,7 +483,7 @@ var POPULAR_LUCIDE_ICONS = [
   "layers",
   "activity"
 ].map((s) => s.toLowerCase());
-var OctarineIconPickerModal = class extends import_obsidian.Modal {
+var ExplorerCategoryIconPickerModal = class extends import_obsidian.Modal {
   constructor(app, currentIcon, onSelect) {
     super(app);
     this.currentIcon = currentIcon;
@@ -500,7 +500,7 @@ var OctarineIconPickerModal = class extends import_obsidian.Modal {
     });
     searchInput.style.width = "100%";
     searchInput.value = this.currentIcon;
-    this.gridEl = contentEl.createDiv({ cls: "octarine-icon-modal-grid" });
+    this.gridEl = contentEl.createDiv({ cls: "ect-icon-modal-grid" });
     searchInput.addEventListener("input", () => {
       this.searchQuery = searchInput.value.trim().toLowerCase();
       this.renderGrid();
@@ -520,14 +520,14 @@ var OctarineIconPickerModal = class extends import_obsidian.Modal {
       }
     }
     candidates.forEach((iconName) => {
-      const item = this.gridEl.createDiv({ cls: "octarine-icon-modal-item" });
+      const item = this.gridEl.createDiv({ cls: "ect-icon-modal-item" });
       const iconBox = item.createDiv();
       (0, import_obsidian.setIcon)(iconBox, iconName);
       if (!iconBox.querySelector("svg")) {
         item.remove();
         return;
       }
-      item.createDiv({ cls: "octarine-icon-modal-name", text: iconName });
+      item.createDiv({ cls: "ect-icon-modal-name", text: iconName });
       item.addEventListener("click", () => {
         this.onSelect(iconName);
         this.close();
@@ -558,7 +558,7 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
       await this.plugin.saveSettings();
       this.plugin.applyFilter();
     }));
-    const autoHideSnippetEnabled = getComputedStyle(document.body).getPropertyValue("--octarine-auto-hide-snippet-active").trim() === "1";
+    const autoHideSnippetEnabled = getComputedStyle(document.body).getPropertyValue("--ect-auto-hide-snippet-active").trim() === "1";
     if (autoHideSnippetEnabled) {
       new import_obsidian.Setting(containerEl).setName("Hide category tabs with Auto Hide").setDesc("Collapse the category bar to a pill that expands on hover.").addToggle((toggle) => toggle.setValue(this.plugin.settings.hideWithAutoHide).onChange(async (value) => {
         this.plugin.settings.hideWithAutoHide = value;
@@ -567,11 +567,11 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
       }));
     }
     const tabsBody = this.makeSection("tabs", "Category Tabs", containerEl);
-    const tabsListEl = tabsBody.createDiv({ cls: "octarine-tab-list" });
+    const tabsListEl = tabsBody.createDiv({ cls: "ect-tab-list" });
     this.plugin.settings.tabs.forEach((tab, index) => {
       this.renderTabCard(tabsListEl, tab, index);
     });
-    const tabsFooter = tabsBody.createDiv({ cls: "octarine-section-footer" });
+    const tabsFooter = tabsBody.createDiv({ cls: "ect-section-footer" });
     tabsFooter.createEl("button", {
       cls: "mod-cta",
       text: "+ Add New Category Tab"
@@ -590,7 +590,7 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
     });
     const auditBody = this.makeSection("audit", "Vault Root Coverage", containerEl);
     auditBody.createDiv({
-      cls: "octarine-section-desc",
+      cls: "ect-section-desc",
       text: "Root-level folders with no dedicated category tab. <root> views don\u2019t count \u2014 a folder should be owned by a tab that shows it."
     });
     const unassignedContainer = auditBody.createDiv();
@@ -599,22 +599,22 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
   }
   /** Collapsible <details> section; state lives in plugin.sectionCollapsed. */
   makeSection(key, title, parentEl) {
-    const details = parentEl.createEl("details", { cls: "octarine-collapse" });
+    const details = parentEl.createEl("details", { cls: "ect-collapse" });
     details.open = !this.plugin.sectionCollapsed[key];
-    const summary = details.createEl("summary", { cls: "octarine-collapse-summary" });
-    const chevron = summary.createSpan({ cls: "octarine-collapse-chevron" });
+    const summary = details.createEl("summary", { cls: "ect-collapse-summary" });
+    const chevron = summary.createSpan({ cls: "ect-collapse-chevron" });
     (0, import_obsidian.setIcon)(chevron, "chevron-right");
     chevron.setAttr("aria-hidden", "true");
-    summary.createSpan({ cls: "octarine-collapse-title", text: title });
-    const body = details.createDiv({ cls: "octarine-collapse-body" });
+    summary.createSpan({ cls: "ect-collapse-title", text: title });
+    const body = details.createDiv({ cls: "ect-collapse-body" });
     details.addEventListener("toggle", () => {
       this.plugin.sectionCollapsed[key] = !details.open;
     });
     return body;
   }
   renderTabCard(parentEl, tab, index) {
-    const card = parentEl.createDiv({ cls: "octarine-tab-setting-card" });
-    const header = card.createDiv({ cls: "octarine-tab-setting-header" });
+    const card = parentEl.createDiv({ cls: "ect-tab-setting-card" });
+    const header = card.createDiv({ cls: "ect-tab-setting-header" });
     const titleSpan = header.createSpan({ text: `${index + 1}. ${tab.name}` });
     const removeBtn = header.createEl("button", {
       cls: "clickable-icon",
@@ -634,12 +634,12 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
       this.plugin.initExplorerTabs();
       this.display();
     });
-    const grid = card.createDiv({ cls: "octarine-tab-grid" });
-    const leftCol = grid.createDiv({ cls: "octarine-tab-left" });
-    leftCol.createDiv({ cls: "octarine-field-label", text: "Name" });
+    const grid = card.createDiv({ cls: "ect-tab-grid" });
+    const leftCol = grid.createDiv({ cls: "ect-tab-left" });
+    leftCol.createDiv({ cls: "ect-field-label", text: "Name" });
     const nameInput = leftCol.createEl("input", {
       type: "text",
-      cls: "octarine-text-input",
+      cls: "ect-text-input",
       placeholder: "Category Name"
     });
     nameInput.value = tab.name;
@@ -649,11 +649,11 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
       await this.plugin.saveSettings();
       this.plugin.initExplorerTabs();
     });
-    leftCol.createDiv({ cls: "octarine-field-label", text: "Icon" });
-    const iconRow = leftCol.createDiv({ cls: "octarine-icon-row" });
+    leftCol.createDiv({ cls: "ect-field-label", text: "Icon" });
+    const iconRow = leftCol.createDiv({ cls: "ect-icon-row" });
     const iconInput = iconRow.createEl("input", {
       type: "text",
-      cls: "octarine-text-input",
+      cls: "ect-text-input",
       placeholder: "icon-id"
     });
     iconInput.value = tab.icon;
@@ -671,7 +671,7 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
     });
     (0, import_obsidian.setIcon)(pickBtn, "search");
     pickBtn.addEventListener("click", () => {
-      new OctarineIconPickerModal(this.app, tab.icon, async (chosen) => {
+      new ExplorerCategoryIconPickerModal(this.app, tab.icon, async (chosen) => {
         tab.icon = chosen;
         iconInput.value = chosen;
         await this.plugin.saveSettings();
@@ -679,7 +679,7 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
       }).open();
     });
     const filesOnlyName = document.createDocumentFragment();
-    filesOnlyName.createSpan({ cls: "octarine-field-label", text: "Files-only view" });
+    filesOnlyName.createSpan({ cls: "ect-field-label", text: "Files-only view" });
     new import_obsidian.Setting(leftCol).setName(filesOnlyName).setDesc("Show files, hide folder labels.").addToggle((toggle) => {
       var _a;
       return toggle.setValue((_a = tab.filesOnly) != null ? _a : false).onChange(async (value) => {
@@ -688,15 +688,15 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
         this.plugin.applyFilter();
       });
     });
-    const rightCol = grid.createDiv({ cls: "octarine-tab-right" });
-    rightCol.createDiv({ cls: "octarine-field-label", text: "Folders & Files" });
+    const rightCol = grid.createDiv({ cls: "ect-tab-right" });
+    rightCol.createDiv({ cls: "ect-field-label", text: "Folders & Files" });
     rightCol.createDiv({
-      cls: "octarine-field-desc",
+      cls: "ect-field-desc",
       text: "Vault-relative paths, one per line. <root> includes the vault root."
     });
     const validationContainer = rightCol.createDiv();
     const textArea = rightCol.createEl("textarea", {
-      cls: "octarine-paths-textarea",
+      cls: "ect-paths-textarea",
       placeholder: "Inbox\n<root>\nProjects/Active\nREADME.md"
     });
     textArea.rows = 4;
@@ -716,7 +716,7 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
     container.empty();
     if (paths.length === 0) {
       container.createDiv({
-        cls: "octarine-validation-box octarine-validation-warning",
+        cls: "ect-validation-box ect-validation-warning",
         text: "\u26A0\uFE0F No paths configured for this tab. Clicking it will hide all files."
       });
       return;
@@ -733,13 +733,13 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
     }
     if (missingPaths.length > 0) {
       const warnBox = container.createDiv({
-        cls: "octarine-validation-box octarine-validation-warning"
+        cls: "ect-validation-box ect-validation-warning"
       });
       warnBox.createEl("strong", { text: "\u26A0\uFE0F Missing folders/files in vault: " });
       warnBox.createSpan({ text: missingPaths.join(", ") });
     } else {
       container.createDiv({
-        cls: "octarine-validation-ok",
+        cls: "ect-validation-ok",
         text: `\u2713 All ${paths.length} configured path(s) verified in vault.`
       });
     }
@@ -769,14 +769,14 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
       a warning icon so the folded section still signals "check me". */
   refreshAuditSummary(container) {
     var _a, _b;
-    const summary = (_a = container.closest(".octarine-collapse")) == null ? void 0 : _a.querySelector(".octarine-collapse-summary");
+    const summary = (_a = container.closest(".ect-collapse")) == null ? void 0 : _a.querySelector(".ect-collapse-summary");
     if (!summary)
       return;
     const hasIssues = this.getUnassignedRootNames().length > 0;
-    summary.toggleClass("octarine-audit-warning", hasIssues);
-    (_b = summary.querySelector(".octarine-audit-warning-icon")) == null ? void 0 : _b.remove();
+    summary.toggleClass("ect-audit-warning", hasIssues);
+    (_b = summary.querySelector(".ect-audit-warning-icon")) == null ? void 0 : _b.remove();
     if (hasIssues) {
-      const icon = summary.createSpan({ cls: "octarine-audit-warning-icon" });
+      const icon = summary.createSpan({ cls: "ect-audit-warning-icon" });
       (0, import_obsidian.setIcon)(icon, "triangle-alert");
       if (!icon.querySelector("svg")) {
         icon.empty();
@@ -789,11 +789,11 @@ var ExplorerTabsSettingTab = class extends import_obsidian.PluginSettingTab {
     const unassigned = this.getUnassignedRootNames();
     if (unassigned.length === 0) {
       container.createDiv({
-        cls: "octarine-validation-ok",
+        cls: "ect-validation-ok",
         text: "\u2713 Every root-level folder has a dedicated tab."
       });
     } else {
-      const box = container.createDiv({ cls: "octarine-unassigned-list" });
+      const box = container.createDiv({ cls: "ect-unassigned-list" });
       box.setText(`Unassigned root folders (${unassigned.length}): ${unassigned.join(", ")}`);
     }
     this.refreshAuditSummary(container);

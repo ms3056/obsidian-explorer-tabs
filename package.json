@@ -1,7 +1,7 @@
 {
   "name": "obsidian-explorer-tabs",
-  "version": "1.0.0",
-  "description": "Adds Octarine-style category filter tabs to the native File Explorer.",
+  "version": "1.0.2",
+  "description": "Adds category filter tabs to the native File Explorer.",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",

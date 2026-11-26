@@ -86,15 +86,15 @@ export default class ExplorerTabsPlugin extends Plugin {
             this.filterRefreshTimer = null;
         }
         // Remove injected UI bars and restore hidden items
-        document.querySelectorAll('.octarine-tabs-container').forEach(el => el.remove());
-        document.querySelectorAll('.octarine-filtered-out').forEach(el => {
-            el.classList.remove('octarine-filtered-out');
+        document.querySelectorAll('.ect-tabs-container').forEach(el => el.remove());
+        document.querySelectorAll('.ect-filtered-out').forEach(el => {
+            el.classList.remove('ect-filtered-out');
         });
-        document.querySelectorAll('.octarine-hidden-root').forEach(el => {
-            el.classList.remove('octarine-hidden-root');
+        document.querySelectorAll('.ect-hidden-root').forEach(el => {
+            el.classList.remove('ect-hidden-root');
         });
-        document.querySelectorAll('.octarine-files-only-folder').forEach(el => {
-            el.classList.remove('octarine-files-only-folder');
+        document.querySelectorAll('.ect-files-only-folder').forEach(el => {
+            el.classList.remove('ect-files-only-folder');
         });
     }
 
@@ -129,22 +129,22 @@ export default class ExplorerTabsPlugin extends Plugin {
         if (!container) return;
 
         // Clean up existing bar in this leaf if refreshing
-        const existingBar = container.querySelector('.octarine-tabs-container');
+        const existingBar = container.querySelector('.ect-tabs-container');
         if (existingBar) existingBar.remove();
 
         const navHeader = container.querySelector('.nav-header');
         const filesContainer = container.querySelector('.nav-files-container');
 
         const tabBar = document.createElement('div');
-        tabBar.className = 'octarine-tabs-container';
-        tabBar.classList.toggle('octarine-auto-hide', this.settings.hideWithAutoHide);
+        tabBar.className = 'ect-tabs-container';
+        tabBar.classList.toggle('ect-auto-hide', this.settings.hideWithAutoHide);
 
         const tabButtons = document.createElement('div');
-        tabButtons.className = 'octarine-tab-buttons';
+        tabButtons.className = 'ect-tab-buttons';
 
         for (const tab of this.settings.tabs) {
             const btn = document.createElement('button');
-            btn.className = 'octarine-tab-btn clickable-icon';
+            btn.className = 'ect-tab-btn clickable-icon';
             if (this.settings.activeTabId === tab.id) {
                 btn.classList.add('is-active');
             }
@@ -170,10 +170,10 @@ export default class ExplorerTabsPlugin extends Plugin {
         tabBar.appendChild(tabButtons);
 
         const actions = document.createElement('div');
-        actions.className = 'octarine-tab-actions';
+        actions.className = 'ect-tab-actions';
 
         const resetButton = document.createElement('button');
-        resetButton.className = 'octarine-reset-expansion-btn clickable-icon';
+        resetButton.className = 'ect-reset-expansion-btn clickable-icon';
         resetButton.setAttribute('aria-label', 'Reset folder expansion to settings');
         resetButton.setAttribute('data-tooltip-position', 'bottom');
         resetButton.title = 'Reset folder expansion to settings';
@@ -293,7 +293,7 @@ export default class ExplorerTabsPlugin extends Plugin {
     private updateTabButtonsState() {
         const leaves = this.app.workspace.getLeavesOfType('file-explorer');
         for (const leaf of leaves) {
-            const buttons = leaf.view.containerEl.querySelectorAll('.octarine-tab-btn');
+            const buttons = leaf.view.containerEl.querySelectorAll('.ect-tab-btn');
             buttons.forEach((btn, index) => {
                 const tab = this.settings.tabs[index];
                 if (tab && this.settings.activeTabId === tab.id) {
@@ -432,9 +432,9 @@ export default class ExplorerTabsPlugin extends Plugin {
         }
 
         itemStates.forEach(({ wrapperEl, hideRoot, hideFolderTitle, isVisible }) => {
-            wrapperEl.classList.toggle('octarine-hidden-root', hideRoot);
-            wrapperEl.classList.toggle('octarine-files-only-folder', hideFolderTitle);
-            wrapperEl.classList.toggle('octarine-filtered-out', !isVisible);
+            wrapperEl.classList.toggle('ect-hidden-root', hideRoot);
+            wrapperEl.classList.toggle('ect-files-only-folder', hideFolderTitle);
+            wrapperEl.classList.toggle('ect-filtered-out', !isVisible);
         });
     }
 
@@ -460,9 +460,9 @@ export default class ExplorerTabsPlugin extends Plugin {
     private clearFilterClasses(filesContainer: HTMLElement) {
         filesContainer.querySelectorAll<HTMLElement>('.nav-folder, .nav-file').forEach(wrapperEl => {
             wrapperEl.classList.remove(
-                'octarine-filtered-out',
-                'octarine-hidden-root',
-                'octarine-files-only-folder'
+                'ect-filtered-out',
+                'ect-hidden-root',
+                'ect-files-only-folder'
             );
         });
     }
@@ -520,7 +520,7 @@ const POPULAR_LUCIDE_ICONS: string[] = [
 ].map((s) => s.toLowerCase());
 
 /** Icon search + pick modal, same UX as the Tasks Lucide Icons plugin. */
-class OctarineIconPickerModal extends Modal {
+class ExplorerCategoryIconPickerModal extends Modal {
     private searchQuery = "";
     private gridEl!: HTMLElement;
 
@@ -544,7 +544,7 @@ class OctarineIconPickerModal extends Modal {
         searchInput.style.width = "100%";
         searchInput.value = this.currentIcon;
 
-        this.gridEl = contentEl.createDiv({ cls: "octarine-icon-modal-grid" });
+        this.gridEl = contentEl.createDiv({ cls: "ect-icon-modal-grid" });
 
         searchInput.addEventListener("input", () => {
             this.searchQuery = searchInput.value.trim().toLowerCase();
@@ -568,7 +568,7 @@ class OctarineIconPickerModal extends Modal {
         }
 
         candidates.forEach((iconName) => {
-            const item = this.gridEl.createDiv({ cls: "octarine-icon-modal-item" });
+            const item = this.gridEl.createDiv({ cls: "ect-icon-modal-item" });
             const iconBox = item.createDiv();
             setIcon(iconBox, iconName);
 
@@ -578,7 +578,7 @@ class OctarineIconPickerModal extends Modal {
                 return;
             }
 
-            item.createDiv({ cls: "octarine-icon-modal-name", text: iconName });
+            item.createDiv({ cls: "ect-icon-modal-name", text: iconName });
             item.addEventListener("click", () => {
                 this.onSelect(iconName);
                 this.close();
@@ -624,7 +624,7 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
                 }));
 
         const autoHideSnippetEnabled =
-            getComputedStyle(document.body).getPropertyValue('--octarine-auto-hide-snippet-active').trim() === '1';
+            getComputedStyle(document.body).getPropertyValue('--ect-auto-hide-snippet-active').trim() === '1';
         if (autoHideSnippetEnabled) {
             new Setting(containerEl)
                 .setName('Hide category tabs with Auto Hide')
@@ -641,14 +641,14 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
         // --- Category Tabs: collapsible section with one card per tab ---
         const tabsBody = this.makeSection('tabs', 'Category Tabs', containerEl);
 
-        const tabsListEl = tabsBody.createDiv({ cls: 'octarine-tab-list' });
+        const tabsListEl = tabsBody.createDiv({ cls: 'ect-tab-list' });
 
         this.plugin.settings.tabs.forEach((tab, index) => {
             this.renderTabCard(tabsListEl, tab, index);
         });
 
         // Add button at the bottom of the fold, after the tab cards.
-        const tabsFooter = tabsBody.createDiv({ cls: 'octarine-section-footer' });
+        const tabsFooter = tabsBody.createDiv({ cls: 'ect-section-footer' });
         tabsFooter.createEl('button', {
             cls: 'mod-cta',
             text: '+ Add New Category Tab'
@@ -669,7 +669,7 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
         // --- Vault Root Coverage: collapsible audit section ---
         const auditBody = this.makeSection('audit', 'Vault Root Coverage', containerEl);
         auditBody.createDiv({
-            cls: 'octarine-section-desc',
+            cls: 'ect-section-desc',
             text: 'Root-level folders with no dedicated category tab. <root> views don\u2019t count \u2014 a folder should be owned by a tab that shows it.'
         });
         const unassignedContainer = auditBody.createDiv();
@@ -683,16 +683,16 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
         title: string,
         parentEl: HTMLElement
     ): HTMLElement {
-        const details = parentEl.createEl('details', { cls: 'octarine-collapse' });
+        const details = parentEl.createEl('details', { cls: 'ect-collapse' });
         details.open = !this.plugin.sectionCollapsed[key];
 
-        const summary = details.createEl('summary', { cls: 'octarine-collapse-summary' });
-        const chevron = summary.createSpan({ cls: 'octarine-collapse-chevron' });
+        const summary = details.createEl('summary', { cls: 'ect-collapse-summary' });
+        const chevron = summary.createSpan({ cls: 'ect-collapse-chevron' });
         setIcon(chevron, 'chevron-right');
         chevron.setAttr('aria-hidden', 'true');
-        summary.createSpan({ cls: 'octarine-collapse-title', text: title });
+        summary.createSpan({ cls: 'ect-collapse-title', text: title });
 
-        const body = details.createDiv({ cls: 'octarine-collapse-body' });
+        const body = details.createDiv({ cls: 'ect-collapse-body' });
 
         details.addEventListener('toggle', () => {
             this.plugin.sectionCollapsed[key] = !details.open;
@@ -702,9 +702,9 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
     }
 
     private renderTabCard(parentEl: HTMLElement, tab: TabConfig, index: number) {
-        const card = parentEl.createDiv({ cls: 'octarine-tab-setting-card' });
+        const card = parentEl.createDiv({ cls: 'ect-tab-setting-card' });
 
-        const header = card.createDiv({ cls: 'octarine-tab-setting-header' });
+        const header = card.createDiv({ cls: 'ect-tab-setting-header' });
         const titleSpan = header.createSpan({ text: `${index + 1}. ${tab.name}` });
 
         const removeBtn = header.createEl('button', {
@@ -727,15 +727,15 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
         });
 
         // Compact 2-column card: left = name/icon/files-only, right = paths.
-        const grid = card.createDiv({ cls: 'octarine-tab-grid' });
+        const grid = card.createDiv({ cls: 'ect-tab-grid' });
 
         // --- Left column ---
-        const leftCol = grid.createDiv({ cls: 'octarine-tab-left' });
+        const leftCol = grid.createDiv({ cls: 'ect-tab-left' });
 
-        leftCol.createDiv({ cls: 'octarine-field-label', text: 'Name' });
+        leftCol.createDiv({ cls: 'ect-field-label', text: 'Name' });
         const nameInput = leftCol.createEl('input', {
             type: 'text',
-            cls: 'octarine-text-input',
+            cls: 'ect-text-input',
             placeholder: 'Category Name'
         });
         nameInput.value = tab.name;
@@ -746,11 +746,11 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
             this.plugin.initExplorerTabs();
         });
 
-        leftCol.createDiv({ cls: 'octarine-field-label', text: 'Icon' });
-        const iconRow = leftCol.createDiv({ cls: 'octarine-icon-row' });
+        leftCol.createDiv({ cls: 'ect-field-label', text: 'Icon' });
+        const iconRow = leftCol.createDiv({ cls: 'ect-icon-row' });
         const iconInput = iconRow.createEl('input', {
             type: 'text',
-            cls: 'octarine-text-input',
+            cls: 'ect-text-input',
             placeholder: 'icon-id'
         });
         iconInput.value = tab.icon;
@@ -770,7 +770,7 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
         });
         setIcon(pickBtn, 'search');
         pickBtn.addEventListener('click', () => {
-            new OctarineIconPickerModal(this.app, tab.icon, async (chosen) => {
+            new ExplorerCategoryIconPickerModal(this.app, tab.icon, async (chosen) => {
                 tab.icon = chosen;
                 iconInput.value = chosen;
                 await this.plugin.saveSettings();
@@ -780,7 +780,7 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
 
         // Name label styled like the other field labels, native toggle kept.
         const filesOnlyName = document.createDocumentFragment();
-        filesOnlyName.createSpan({ cls: 'octarine-field-label', text: 'Files-only view' });
+        filesOnlyName.createSpan({ cls: 'ect-field-label', text: 'Files-only view' });
         new Setting(leftCol)
             .setName(filesOnlyName)
             .setDesc('Show files, hide folder labels.')
@@ -793,17 +793,17 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
                 }));
 
         // --- Right column: paths textarea (compact) + validation ---
-        const rightCol = grid.createDiv({ cls: 'octarine-tab-right' });
-        rightCol.createDiv({ cls: 'octarine-field-label', text: 'Folders & Files' });
+        const rightCol = grid.createDiv({ cls: 'ect-tab-right' });
+        rightCol.createDiv({ cls: 'ect-field-label', text: 'Folders & Files' });
         rightCol.createDiv({
-            cls: 'octarine-field-desc',
+            cls: 'ect-field-desc',
             text: 'Vault-relative paths, one per line. <root> includes the vault root.'
         });
 
         const validationContainer = rightCol.createDiv();
 
         const textArea = rightCol.createEl('textarea', {
-            cls: 'octarine-paths-textarea',
+            cls: 'ect-paths-textarea',
             placeholder: 'Inbox\n<root>\nProjects/Active\nREADME.md'
         });
         textArea.rows = 4;
@@ -829,7 +829,7 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
 
         if (paths.length === 0) {
             container.createDiv({
-                cls: 'octarine-validation-box octarine-validation-warning',
+                cls: 'ect-validation-box ect-validation-warning',
                 text: '⚠️ No paths configured for this tab. Clicking it will hide all files.'
             });
             return;
@@ -847,13 +847,13 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
 
         if (missingPaths.length > 0) {
             const warnBox = container.createDiv({
-                cls: 'octarine-validation-box octarine-validation-warning'
+                cls: 'ect-validation-box ect-validation-warning'
             });
             warnBox.createEl('strong', { text: '⚠️ Missing folders/files in vault: ' });
             warnBox.createSpan({ text: missingPaths.join(', ') });
         } else {
             container.createDiv({
-                cls: 'octarine-validation-ok',
+                cls: 'ect-validation-ok',
                 text: `✓ All ${paths.length} configured path(s) verified in vault.`
             });
         }
@@ -889,16 +889,16 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
     /** When the audit has findings, make the collapse summary red and add
         a warning icon so the folded section still signals "check me". */
     private refreshAuditSummary(container: HTMLElement) {
-        const summary = container.closest('.octarine-collapse')
-            ?.querySelector<HTMLElement>('.octarine-collapse-summary');
+        const summary = container.closest('.ect-collapse')
+            ?.querySelector<HTMLElement>('.ect-collapse-summary');
         if (!summary) return;
 
         const hasIssues = this.getUnassignedRootNames().length > 0;
-        summary.toggleClass('octarine-audit-warning', hasIssues);
+        summary.toggleClass('ect-audit-warning', hasIssues);
 
-        summary.querySelector('.octarine-audit-warning-icon')?.remove();
+        summary.querySelector('.ect-audit-warning-icon')?.remove();
         if (hasIssues) {
-            const icon = summary.createSpan({ cls: 'octarine-audit-warning-icon' });
+            const icon = summary.createSpan({ cls: 'ect-audit-warning-icon' });
             setIcon(icon, 'triangle-alert');
             if (!icon.querySelector('svg')) {
                 icon.empty();
@@ -914,11 +914,11 @@ class ExplorerTabsSettingTab extends PluginSettingTab {
 
         if (unassigned.length === 0) {
             container.createDiv({
-                cls: 'octarine-validation-ok',
+                cls: 'ect-validation-ok',
                 text: '✓ Every root-level folder has a dedicated tab.'
             });
         } else {
-            const box = container.createDiv({ cls: 'octarine-unassigned-list' });
+            const box = container.createDiv({ cls: 'ect-unassigned-list' });
             box.setText(`Unassigned root folders (${unassigned.length}): ${unassigned.join(', ')}`);
         }
 

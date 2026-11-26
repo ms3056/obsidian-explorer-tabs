@@ -1,5 +1,5 @@
 /* Container for the injected tab bar */
-.octarine-tabs-container {
+.ect-tabs-container {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
@@ -9,7 +9,7 @@
     flex-shrink: 0;
 }
 
-.octarine-tab-buttons {
+.ect-tab-buttons {
     grid-column: 2;
     display: flex;
     align-items: center;
@@ -17,14 +17,14 @@
     gap: 6px;
 }
 
-.octarine-tab-actions {
+.ect-tab-actions {
     grid-column: 3;
     justify-self: end;
 }
 
 /* Individual subtle icon buttons */
-.octarine-tab-btn,
-.octarine-reset-expansion-btn {
+.ect-tab-btn,
+.ect-reset-expansion-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,53 +40,53 @@
     transition: background-color 0.15s ease, color 0.15s ease, opacity 0.15s ease;
 }
 
-.octarine-tab-btn:hover,
-.octarine-reset-expansion-btn:hover {
+.ect-tab-btn:hover,
+.ect-reset-expansion-btn:hover {
     background-color: var(--background-modifier-hover);
     color: var(--icon-color-hover);
     opacity: var(--icon-opacity-hover);
 }
 
-/* Subtle active state matching Octarine / native Obsidian */
-.octarine-tab-btn.is-active {
+/* Subtle active state matching Explorer Category / native Obsidian */
+.ect-tab-btn.is-active {
     background-color: var(--background-modifier-active-hover, rgba(255, 255, 255, 0.12));
     color: var(--icon-color-active, var(--text-normal));
     opacity: 1;
     box-shadow: inset 0 0 0 1px var(--background-modifier-border-focus, rgba(255, 255, 255, 0.08));
 }
 
-.octarine-tab-btn svg.svg-icon {
+.ect-tab-btn svg.svg-icon {
     width: 16px;
     height: 16px;
     stroke-width: 1.75px;
 }
 
-.octarine-reset-expansion-btn svg.svg-icon {
+.ect-reset-expansion-btn svg.svg-icon {
     width: 16px;
     height: 16px;
     stroke-width: 1.75px;
 }
 
 /* Filtering execution class */
-.octarine-filtered-out {
+.ect-filtered-out {
     display: none !important;
 }
 
-.octarine-hidden-root > .nav-folder-title {
+.ect-hidden-root > .nav-folder-title {
     display: none !important;
 }
 
-.octarine-hidden-root > .nav-folder-children {
+.ect-hidden-root > .nav-folder-children {
     margin-left: 0 !important;
     padding-left: 0 !important;
     border-left: none !important;
 }
 
-.octarine-files-only-folder > .nav-folder-title {
+.ect-files-only-folder > .nav-folder-title {
     display: none !important;
 }
 
-.octarine-files-only-folder > .nav-folder-children {
+.ect-files-only-folder > .nav-folder-children {
     margin-left: 0 !important;
     padding-left: 0 !important;
     border-left: none !important;
@@ -98,7 +98,7 @@
 
 /* Collapsible settings sections — same <details> pattern as the
    tasks-lucide-icons plugin so the whole settings page reads alike. */
-.octarine-collapse {
+.ect-collapse {
     margin-top: 16px;
     border: 1px solid var(--background-modifier-border);
     border-radius: 8px;
@@ -106,7 +106,7 @@
     overflow: hidden;
 }
 
-.octarine-collapse-summary {
+.ect-collapse-summary {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -117,15 +117,15 @@
     transition: background-color 0.12s ease;
 }
 
-.octarine-collapse-summary::-webkit-details-marker {
+.ect-collapse-summary::-webkit-details-marker {
     display: none;
 }
 
-.octarine-collapse-summary:hover {
+.ect-collapse-summary:hover {
     background: var(--background-modifier-hover);
 }
 
-.octarine-collapse-chevron {
+.ect-collapse-chevron {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -134,16 +134,16 @@
     flex-shrink: 0;
 }
 
-.octarine-collapse-chevron svg {
+.ect-collapse-chevron svg {
     width: 14px;
     height: 14px;
 }
 
-.octarine-collapse[open] .octarine-collapse-chevron {
+.ect-collapse[open] .ect-collapse-chevron {
     transform: rotate(90deg);
 }
 
-.octarine-collapse-title {
+.ect-collapse-title {
     flex: 1;
     min-width: 0;
     font-weight: 600;
@@ -152,15 +152,15 @@
 
 /* Audit section summary: red title + warning icon while the vault root
    has unassigned items, so a folded section still signals "check me". */
-.octarine-collapse-summary.octarine-audit-warning {
+.ect-collapse-summary.ect-audit-warning {
     color: var(--text-error);
 }
 
-.octarine-collapse-summary.octarine-audit-warning .octarine-collapse-title {
+.ect-collapse-summary.ect-audit-warning .ect-collapse-title {
     color: var(--text-error);
 }
 
-.octarine-audit-warning-icon {
+.ect-audit-warning-icon {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -168,52 +168,52 @@
     color: var(--text-error);
 }
 
-.octarine-audit-warning-icon svg {
+.ect-audit-warning-icon svg {
     width: 16px;
     height: 16px;
     stroke-width: 2px;
 }
 
-.octarine-collapse-body {
+.ect-collapse-body {
     padding: 6px 12px 12px;
 }
 
-.octarine-section-desc {
+.ect-section-desc {
     color: var(--text-muted);
     font-size: 0.85em;
     margin: 6px 0 12px;
 }
 
-.octarine-section-footer {
+.ect-section-footer {
     display: flex;
     justify-content: flex-end;
     margin-top: 10px;
 }
 
-.octarine-section-footer .mod-cta {
+.ect-section-footer .mod-cta {
     white-space: nowrap;
 }
 
 /* Vertical stack of tab cards. */
-.octarine-tab-list {
+.ect-tab-list {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
 /* One card per category tab. */
-.octarine-tab-setting-card {
+.ect-tab-setting-card {
     border: 1px solid var(--background-modifier-border);
     border-radius: 8px;
     padding: 10px 12px;
     background-color: var(--background-secondary);
 }
 
-.octarine-tab-setting-card:hover {
+.ect-tab-setting-card:hover {
     border-color: var(--background-modifier-border-hover);
 }
 
-.octarine-tab-setting-header {
+.ect-tab-setting-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -223,14 +223,14 @@
     font-weight: 600;
 }
 
-.octarine-tab-setting-header .clickable-icon {
+.ect-tab-setting-header .clickable-icon {
     height: 26px;
     width: 26px;
 }
 
 /* Compact two-column card body: left = name/icon/files-only (60%),
    right = the paths textarea (40%). */
-.octarine-tab-grid {
+.ect-tab-grid {
     display: grid;
     grid-template-columns: minmax(200px, 1.2fr) minmax(0, 0.8fr);
     gap: 16px;
@@ -238,13 +238,13 @@
 }
 
 @media (max-width: 640px) {
-    .octarine-tab-grid {
+    .ect-tab-grid {
         grid-template-columns: 1fr;
     }
 }
 
-.octarine-tab-left,
-.octarine-tab-right {
+.ect-tab-left,
+.ect-tab-right {
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -252,7 +252,7 @@
 }
 
 /* Small uppercase field label (Name / Icon / Folders & Files). */
-.octarine-field-label {
+.ect-field-label {
     font-size: 0.72em;
     font-weight: 600;
     text-transform: uppercase;
@@ -261,35 +261,35 @@
     margin-top: 2px;
 }
 
-.octarine-tab-left .octarine-field-label:not(:first-child) {
+.ect-tab-left .ect-field-label:not(:first-child) {
     margin-top: 10px;
 }
 
-.octarine-field-desc {
+.ect-field-desc {
     color: var(--text-muted);
     font-size: 0.72em;
     line-height: 1.4;
     margin-bottom: 2px;
 }
 
-.octarine-text-input {
+.ect-text-input {
     width: 100%;
     height: 30px;
     font-size: 0.85em;
     padding: 2px 8px;
 }
 
-.octarine-icon-row {
+.ect-icon-row {
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.octarine-icon-row .octarine-text-input {
+.ect-icon-row .ect-text-input {
     flex: 1;
 }
 
-.octarine-icon-row .clickable-icon {
+.ect-icon-row .clickable-icon {
     height: 30px;
     width: 30px;
     flex-shrink: 0;
@@ -298,21 +298,21 @@
 /* Files-only toggle rows sit inside the narrow left column: keep the
    Setting compact so the two columns stay balanced. The description is
    a single short sentence — never ellipsized or cut off. */
-.octarine-tab-left .setting-item {
+.ect-tab-left .setting-item {
     padding: 6px 0 0;
     border: none;
 }
 
-.octarine-tab-left .setting-item-info {
+.ect-tab-left .setting-item-info {
     flex: 1;
     min-width: 0;
 }
 
-.octarine-tab-left .setting-item-name {
+.ect-tab-left .setting-item-name {
     font-size: 0.9em;
 }
 
-.octarine-tab-left .setting-item-description {
+.ect-tab-left .setting-item-description {
     font-size: 0.75em;
     white-space: normal;
     overflow-wrap: break-word;
@@ -320,7 +320,7 @@
 
 /* Paths textarea: half the previous height — 4 rows is plenty since the
    folders list is now next to the files-only toggle, not below it. */
-.octarine-paths-textarea {
+.ect-paths-textarea {
     width: 100%;
     min-height: 76px;
     font-family: var(--font-monospace);
@@ -329,7 +329,7 @@
     resize: vertical;
 }
 
-.octarine-validation-box {
+.ect-validation-box {
     margin-top: 8px;
     padding: 8px 12px;
     border-radius: 6px;
@@ -337,19 +337,19 @@
     line-height: 1.4;
 }
 
-.octarine-validation-warning {
+.ect-validation-warning {
     background-color: rgba(var(--color-red-rgb), 0.1);
     border: 1px solid rgba(var(--color-red-rgb), 0.3);
     color: var(--text-error);
 }
 
-.octarine-validation-ok {
+.ect-validation-ok {
     color: var(--text-muted);
     font-size: 0.8em;
     margin-top: 4px;
 }
 
-.octarine-unassigned-list {
+.ect-unassigned-list {
     margin-top: 8px;
     padding: 10px 14px;
     background-color: var(--background-secondary);
@@ -360,7 +360,7 @@
 }
 
 /* --- Icon picker modal (mirrors the Tasks Lucide Icons picker) --- */
-.octarine-icon-modal-grid {
+.ect-icon-modal-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
     gap: 8px;
@@ -370,7 +370,7 @@
     margin-top: 10px;
 }
 
-.octarine-icon-modal-item {
+.ect-icon-modal-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -385,18 +385,18 @@
     text-align: center;
 }
 
-.octarine-icon-modal-item:hover {
+.ect-icon-modal-item:hover {
     background: var(--background-modifier-hover);
     border-color: var(--interactive-accent);
     transform: translateY(-1px);
 }
 
-.octarine-icon-modal-item svg {
+.ect-icon-modal-item svg {
     width: 20px;
     height: 20px;
 }
 
-.octarine-icon-modal-name {
+.ect-icon-modal-name {
     font-size: 0.75em;
     color: var(--text-muted);
     word-break: break-all;

@@ -1,9 +1,9 @@
 {
   "id": "obsidian-explorer-tabs",
   "name": "Explorer Category Tabs",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minAppVersion": "1.5.0",
-  "description": "Adds Octarine-style category filter tabs to the native File Explorer with missing-path and root-coverage audits.",
+  "description": "Adds category filter tabs to the native File Explorer with missing-path and root-coverage audits.",
   "author": "HiroMike",
   "isDesktopOnly": false
 }
